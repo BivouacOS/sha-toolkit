@@ -24,11 +24,11 @@ export default {
   outputXlsx: './SHA Tracker.xlsx',
 
   /**
-   * Local copy of the 38 CFR Part 4 PDF, as a file:// URL. DC codes in the
-   * tracker become page-anchored hyperlinks into it. Set to null to link to
-   * eCFR online instead.
+   * Local copy of the 38 CFR Part 4 PDF: a path (relative to this folder) or a
+   * file:// URL. DC codes in the tracker become page-anchored hyperlinks into
+   * it. Set to null, or leave the file out, to link to eCFR online instead.
    */
-  cfrPdfUrl: null,
+  cfrPdfUrl: './38 CFR Part 4.pdf',
 
   /**
    * Your name parts, matched by VALUE in every format. Required by
@@ -60,14 +60,6 @@ export default {
    * match those. A standalone pattern may also redact a provider who shares
    * your name — harmless, and far better than a missed patient reference.
    */
-  /**
-   * Toolkit maintainers only (build-toolkit.mjs). Leave out otherwise.
-   *   toolkitCfrPdf:   path to the 38 CFR Part 4 PDF shipped in the zip
-   *   toolkitShareDir: folder the --release flag copies the zip into
-   */
-  // toolkitCfrPdf: './38 CFR Part 4.pdf',
-  // toolkitShareDir: null,
-
   patientNamePatterns: [
     // Full-name forms first, so they collapse to a single [PATIENT NAME]
     /\bJohn\s+A(?:lbert)?\s+Smith\b/gi,
@@ -83,4 +75,12 @@ export default {
     /\bJohn'?s?\b/gi,
     /\bSmith'?s?\b/gi,
   ],
+
+  /**
+   * Toolkit maintainers only (build-toolkit.mjs). Leave out otherwise.
+   *   toolkitCfrPdf:   path to the 38 CFR Part 4 PDF shipped in the zip
+   *   toolkitShareDir: folder the --release flag copies the zip into
+   */
+  // toolkitCfrPdf: './38 CFR Part 4.pdf',
+  // toolkitShareDir: null,
 };

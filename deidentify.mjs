@@ -6,8 +6,9 @@
  *   node deidentify.mjs --all        — reprocess all PDFs (overwrite existing clean/)
  *   node deidentify.mjs --file NAME  — process one specific file from raw/
  *
- * Input:  Medical Reference Documents/raw/   (contains PII — never read by Claude)
- * Output: Medical Reference Documents/clean/ (de-identified .md files — safe to ingest)
+ * Input:  <recordsDir>/raw/   (contains PII — never read by Claude)
+ * Output: <recordsDir>/clean/ (de-identified .md files — safe to ingest)
+ * recordsDir comes from local.config.mjs (the kit uses "Medical Records").
  */
 
 import fs from 'fs';

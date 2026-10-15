@@ -217,6 +217,17 @@ async function build() {
     ws.mergeCells(`A3:${LAST_VISIBLE}3`);
     ws.getCell('A3').value = 'No conditions yet — they are added as you go through the SHA questions with Claude.';
     ws.getCell('A3').font = { italic: true, color: { argb: 'FF595959' } };
+    // Empty tracker: show every tier band as a color legend.
+    STATUS_TIERS.forEach((tier, i) => {
+      const r = 4 + i;
+      ws.mergeCells(`A${r}:${LAST_VISIBLE}${r}`);
+      const band = ws.getCell(`A${r}`);
+      band.value = `${tier.key.toUpperCase()} — 0 conditions.  ${tier.rule}`;
+      band.fill = solid(tier.fill);
+      band.font = { bold: true, size: 12, color: { argb: tier.font } };
+      band.alignment = { vertical: 'middle' };
+      ws.getRow(r).height = 22;
+    });
   } else {
     ws.dataValidations.add(`B${FIRST_DATA_ROW}:B${LAST_DATA_ROW}`, {
       type: 'list',

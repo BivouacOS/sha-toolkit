@@ -64,6 +64,11 @@ for (const file of files) {
 // to avoid putting PII in front of whatever is reading this output.
 console.log(`Scanned ${files.length} clean file(s) against ${CHECKS.length} pattern(s).`);
 
+if (files.length === 0) {
+  console.log('No clean files yet — nothing to check. Put PDFs in raw/ and run deidentify.mjs.');
+  process.exit(0);
+}
+
 if (findings.length === 0) {
   if (SKIPPED) {
     console.log('No SSN-, phone-, or email-shaped data found.');
