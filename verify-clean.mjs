@@ -19,7 +19,7 @@ import { piiValuePatterns } from './lib/pii-patterns.mjs';
 const VALUE = piiValuePatterns(config);
 const SKIPPED = config.piiPatternsSkipped;
 if (!SKIPPED && !VALUE.names.length) {
-  console.error('local.config.mjs: set patientNameTokens — without them this audit cannot catch\n' +
+  console.error('No name to check for. Type your name in private-ids.txt — without it this audit cannot catch\n' +
     'digit-glued or truncated names. (If you chose not to provide your name, set piiPatternsSkipped: true.)');
   process.exit(1);
 }

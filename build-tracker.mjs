@@ -6,38 +6,12 @@ import { shaSections, shaQuestions } from './data/sha-questions.mjs';
 import { addShaAnswersSheet } from './lib/sha-sheet.mjs';
 import { combinedRating } from './lib/rating-calculator.mjs';
 import { STATUS, STATUS_TIERS, orderConditions } from './lib/status.mjs';
+import { DC_TO_PAGE } from './lib/cfr-pages.mjs';
 import config from './lib/load-config.mjs';
 
 const OUTPUT = config.outputXlsx;
 const ECFR_URL = 'https://www.ecfr.gov/current/title-38/chapter-I/part-4#page-top';
 const PDF_BASE = config.cfrPdfUrl;
-
-// Maps DC code → exact page number in local 38 CFR Part 4 PDF
-// PDF has 1 unnumbered cover page, so "page N of 249" in text = PDF page N+1
-const DC_TO_PAGE = {
-  '5201': 42,
-  '5237': 49,
-  '5260': 54,
-  '5271': 55,
-  '5284': 58,
-  '6006': 74,
-  '6260': 102,
-  '6840': 102,
-  '6847': 103,
-  '7122': 110,
-  '7319': 118,
-  '7346': 123,
-  '7525': 130,
-  '7542': 131,
-  '7804': 143,
-  '7806': 144,
-  '7819': 145,
-  '8045': 155,
-  '8100': 162,
-  '9411': 176,
-  '9413': 176,
-  '9434': 177,
-};
 
 // Column layout: what a reader needs first sits on the left.
 // The running-total chain lives in C (estimate), M, N, and hidden O/P.
@@ -83,8 +57,10 @@ function estimateRowHeight(texts) {
 function dcCellValue(dcCode) {
   if (!/^\d{4}$/.test(dcCode ?? '')) return dcCode ?? ''; // N/A, TBD — nothing to link
   const page = DC_TO_PAGE[dcCode];
-  if (page && PDF_BASE) {
-    return { text: dcCode, hyperlink: `${PDF_BASE}#page=${page}`, tooltip: `38 CFR Part 4, page ${page}` };
+  if (PDF_BASE) {
+    return page
+      ? { text: dcCode, hyperlink: `${PDF_BASE}#page=${page}`, tooltip: `38 CFR Part 4, page ${page}` }
+      : { text: dcCode, hyperlink: PDF_BASE, tooltip: '38 CFR Part 4 (PDF)' };
   }
   return {
     text: dcCode,
@@ -108,9 +84,11 @@ async function build() {
   };
   ws.pageSetup.printTitlesRow = '1:2';
 
-  // Row 1: title + eCFR link
+  // Row 1: title + link to the local PDF, or eCFR without one
   const r1 = ws.getRow(1);
-  r1.getCell(1).value = { text: '38 CFR Part 4 — VA Rating Schedule (eCFR)', hyperlink: ECFR_URL };
+  r1.getCell(1).value = PDF_BASE
+    ? { text: '38 CFR Part 4 — VA Rating Schedule (PDF)', hyperlink: PDF_BASE }
+    : { text: '38 CFR Part 4 — VA Rating Schedule (eCFR)', hyperlink: ECFR_URL };
   r1.getCell(1).font = { color: { argb: 'FF0563C1' }, underline: true };
   r1.height = 20;
 

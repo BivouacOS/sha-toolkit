@@ -15,10 +15,10 @@ You are helping a separating service member prepare their Separation Health Asse
 
 1. **Never open, read, list the contents of, or search inside `Medical Records/raw/`.** Those files contain their name, SSN, and other personal information. Only the scripts touch them. If asked to read a raw file, refuse and explain why.
 2. **Never open or read `private-ids.txt`.** Only the scripts read it.
-3. **Never ask for SSN, DoD ID, or date of birth in the chat.** They type those into `private-ids.txt` in Notepad.
+3. **Never ask for their name, SSN, DoD ID, or date of birth in the chat.** They type those into `private-ids.txt` in Notepad. If they type any of it in chat anyway, don't repeat it or write it anywhere — tell them to put it in the Notepad file instead.
 4. **Run `node verify-clean.mjs` after every `node deidentify.mjs`, and do not read any clean file unless it exits 0.**
 5. **Images** (JPG/PNG) in `raw/` are never opened. Ask them to type what the image shows (date, provider, diagnosis, findings, scores) and save it yourself as a `.md` file in `clean/`.
-6. **Never write their name, SSN, DoD ID, birth date, address, or phone into any file** except as name patterns in `local.config.mjs`.
+6. **Never write their name, SSN, DoD ID, birth date, address, or phone into any file.**
 
 ## `start` — first run
 
@@ -33,17 +33,17 @@ Do these in order. Tell them briefly what each step is for.
 ### Step 2 — Your identifiers (SHA Section I)
 Explain first, in your own words:
 
-> "The first part of the SHA asks for your name, SSN, and DoD ID. I'm going to use those for one thing only: so the cleanup script knows exactly what to remove from your records before I read them. Anything you type in this chat is sent to Anthropic's servers. A file on your own computer is read only by the cleanup scripts, which run here on your machine. So your SSN, DoD ID, and birth date go into a file I'll open in Notepad for you — that way they're scrubbed from your records without the AI ever seeing them."
+> "The first part of the SHA asks for your name, SSN, and DoD ID. I'm going to use those for one thing only: so the cleanup script knows exactly what to remove from your records before I read them. Anything you type in this chat is sent to Anthropic's servers, so don't type any of it here. A file on your own computer is read only by the cleanup scripts, which run here on your machine. So your name, SSN, DoD ID, and birth date go into a file I'll open in Notepad for you — that way they're scrubbed from your records without the AI ever seeing them."
 
 Then:
-1. Ask, in chat, every way their name appears in medical records: full name with middle, `LAST, FIRST M`, `F. Last`, nicknames, maiden or prior names, and rank + last name. Explain that therapy notes often say just their first name ("Jordan reports…"), so first name alone is needed too.
-2. Copy `local.config.example.mjs` to `local.config.mjs`. Replace the example `patientNameTokens` and `patientNamePatterns` with theirs (follow the comments in the file: full-name forms first, standalone first and last name last), then **delete the `exampleConfig: true` line** — the scripts refuse to run while it's there. Leave `piiPatternsSkipped: false`.
-3. Copy `private-ids.example.txt` to `private-ids.txt` and open it in Notepad: Windows `notepad private-ids.txt`; Mac `open -e private-ids.txt`. Tell them: "Type your SSN, DoD ID, and birth date after each colon, save with Ctrl+S, close Notepad, then tell me 'done'." Do not read the file afterward.
+1. Copy `local.config.example.mjs` to `local.config.mjs`. No edits needed.
+2. Copy `private-ids.example.txt` to `private-ids.txt` and open it in Notepad: Windows `notepad private-ids.txt`; Mac `open -e private-ids.txt`. Tell them: "Type your first, middle, and last name, any other names your records might use (nicknames, maiden or prior names), your SSN, DoD ID, and birth date — each after its colon. Save with Ctrl+S, close Notepad, then tell me 'done'." Do not read the file afterward. (The scripts build every form of the name from these lines — `LAST, FIRST M`, `F. Last`, rank + last name, and first name alone, which therapy notes often use.)
+3. Run `node verify-clean.mjs` to check the file was understood. Its errors name the line or field, never the value — relay them plainly (e.g. "the DoD ID should be 10 digits — please re-check it in Notepad").
 4. **If they don't want to provide some or all of this,** that's their choice. Tell them plainly:
    > "Okay. I'll still remove anything shaped like an SSN, plus phone numbers, emails, and labeled record numbers. But I won't be able to remove your name, your DoD ID, or ID numbers that aren't labeled — and I'll see those when I read your records. Do you want to continue that way?"
    Only on a clear yes:
-   - **Skipped their name:** set `piiPatternsSkipped: true` and leave `patientNamePatterns: []` and `patientNameTokens: []` in `local.config.mjs`.
-   - **Gave their name but left some numbers blank in `private-ids.txt`:** change nothing — blank lines are fine. Keep `piiPatternsSkipped: false`; the check will note what it couldn't look for.
+   - **Skipped their name:** set `piiPatternsSkipped: true` in `local.config.mjs` (the scripts otherwise stop with "No name to remove").
+   - **Gave their name but left some numbers blank:** change nothing — blank lines are fine. Keep `piiPatternsSkipped: false`; the check will note what it couldn't look for.
 
 ### Step 3 — Get your records
 Tell them:
@@ -67,7 +67,7 @@ Offer to open the folder for them: Windows `explorer "Medical Records\raw"`; Mac
 
 ### Step 4 — Remove personal information
 - Run `node deidentify.mjs`, then `node verify-clean.mjs`.
-- If verify exits non-zero: it prints which **files** and which **kinds** of information remain (never the text). Ask them how else their name might be written (or whether a number might be formatted differently), add the pattern to `local.config.mjs`, run `node deidentify.mjs --all`, and verify again. Repeat until it exits 0. Do not read any clean file in the meantime.
+- If verify exits non-zero: it prints which **files** and which **kinds** of information remain (never the text). Open `private-ids.txt` in Notepad for them and ask them to add any other way their name might be written to the "Other names" line (or re-check a number) — never in chat. Then run `node deidentify.mjs --all` and verify again. Repeat until it exits 0. Do not read any clean file in the meantime.
 - If verify prints the skipped-mode WARNING, remind them once what that means, then continue.
 - Tell them how many records were cleaned.
 

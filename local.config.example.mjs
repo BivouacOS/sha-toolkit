@@ -1,17 +1,14 @@
 /**
- * LOCAL CONFIG — copy this file to `local.config.mjs` and fill in your own values.
+ * LOCAL CONFIG — copy this file to `local.config.mjs`.
  *
  *   cp local.config.example.mjs local.config.mjs
  *
- * `local.config.mjs` is gitignored because it contains your name and local paths.
- * Nothing else in this project holds personal information, which is what makes the
- * scripts safe to share.
+ * Your name, SSN, DoD ID and birth date do NOT go here: type them into
+ * private-ids.txt (in Notepad). The scripts read that file and build the
+ * redaction patterns from it, so your name is never typed in chat.
  */
 
 export default {
-  /** Delete this line once the values below are yours. Scripts refuse to run while it is here. */
-  exampleConfig: true,
-
   /**
    * Folder holding your medical records. Must contain two subfolders:
    *   raw/    — original PDFs straight from the patient portal (PII — never read by AI)
@@ -31,50 +28,19 @@ export default {
   cfrPdfUrl: './38 CFR Part 4.pdf',
 
   /**
-   * Your name parts, matched by VALUE in every format. Required by
-   * verify-clean.mjs. PDF extraction glues fields together ("600123456SMITH"),
-   * and truncates words, so word-boundary and label-based patterns alone miss
-   * real occurrences.
-   */
-  patientNameTokens: ['John', 'Smith', 'Albert'],
-
-  // Birth date, SSN and DoD ID go in private-ids.txt (typed in Notepad, never read by Claude).
-
-  /**
-   * true only if you chose NOT to provide your name and numbers. Records will
-   * still be scrubbed of SSN-shaped numbers, phones, emails and labeled IDs,
-   * but your name and unlabeled ID numbers will NOT be removed.
+   * true only if you chose NOT to provide your name. Records will still be
+   * scrubbed of SSN-shaped numbers, phones, emails and labeled IDs, but your
+   * name and unlabeled ID numbers will NOT be removed.
    */
   piiPatternsSkipped: false,
 
   /**
-   * Every way your name appears in your medical records. Order matters —
-   * longest/most specific first. These become `[PATIENT NAME]` in clean files.
-   *
-   * Check a raw PDF for the exact formats your facility uses: portals commonly
-   * emit "LAST, FIRST M", "First M Last", and "F. Last" in different sections.
-   *
-   * KEEP THE STANDALONE PATTERNS AT THE BOTTOM. Therapy and behavioral-health
-   * notes narrate in first name alone ("John reports sleeping 4 hours"), often
-   * hundreds of times per record set, and paired first+last patterns never
-   * match those. A standalone pattern may also redact a provider who shares
-   * your name — harmless, and far better than a missed patient reference.
+   * Optional, advanced: extra name patterns (RegExp) and tokens on top of the
+   * ones built from private-ids.txt. Anything here is in plain text in this
+   * file — leave both empty unless you are setting this up for yourself.
    */
-  patientNamePatterns: [
-    // Full-name forms first, so they collapse to a single [PATIENT NAME]
-    /\bJohn\s+A(?:lbert)?\s+Smith\b/gi,
-    /\bSmith,?\s+John\s+A(?:lbert)?\b/gi,
-    /\bSMITH,?\s+JOHN\s+A?\b/g,
-    /\bJohn\s+Smith\b/gi,
-    /\bSmith,?\s+John\b/gi,
-    /\bJ\.?\s*A\.?\s*Smith\b/gi,
-    /\bJ\.\s*Smith\b/gi,
-    // Rank- or title-prefixed
-    /\b(?:Mr|Mrs|Ms|SSG|SFC|MSG|SGT|CPT|MAJ|LT|PFC|SPC)\.?\s+Smith\b/gi,
-    // Standalone first and last name, including possessives
-    /\bJohn'?s?\b/gi,
-    /\bSmith'?s?\b/gi,
-  ],
+  patientNamePatterns: [],
+  patientNameTokens: [],
 
   /**
    * Toolkit maintainers only (build-toolkit.mjs). Leave out otherwise.
