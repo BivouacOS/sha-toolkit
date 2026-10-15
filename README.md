@@ -11,6 +11,8 @@ Computer
 MHS GENESIS Patient Portal login
 Paid Claude account
 
+If you are familiar with Claude in the CLI then you can drag and drop the unzipped folder and it will understand what to do. If you are not as technical I recommend:
+
 1. Install the Claude desktop app: https://claude.ai/download — sign in.
 2. Download this kit: green **Code** button → **Download ZIP**. Unzip it somewhere easy to find, like your Desktop.
 3. Open Claude, click **Code**, and choose the unzipped folder.
