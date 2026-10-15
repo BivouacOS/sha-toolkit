@@ -11,11 +11,12 @@ Computer
 Paid Claude account
 (highly recommended...) MHS GENESIS Patient Portal login
 
-If you are familiar with Claude in the CLI then you can drag and drop the unzipped folder and it will understand what to do. If you are not as technical I recommend:
+If you use Claude Code in a terminal: open a terminal in the unzipped folder, run claude, and type start.
+If you are not as technical I recommend:
 
 1. Install the Claude desktop app: https://claude.ai/download — sign in.
 2. Download this kit: green **Code** button → **Download ZIP**. Unzip it somewhere easy to find, like your Desktop.
-3. Open Claude, click **Code**, and choose the unzipped folder.
+3. Open Claude, click **Code**, and choose the START HERE.txt.
 4. Type: `start`
 
 This folder will tell Claude how to progress from there. By default, it will ask before installing anything.
@@ -24,7 +25,8 @@ Let Claude know if you want to stop any time; type `resume` later to pick up whe
 ## Your privacy
 
 - Don't type your PII into the chat terminals, those are not private to you.
-- Claude never opens your original records (called raw in this program). You type your SSN, DoD ID and birth date into a LOCAL file on your own computer that only the cleanup scripts read to scrub your PII off of records.
+- Claude is instructed never to open your original records (the /raw folder); local scripts remove your personal information first. The cleaned records (diagnoses, notes, test results) are then read by Claude, which means that information is sent to Anthropic servers.
+-  You type your SSN, DoD ID and birth date into a LOCAL file on your own computer that only the cleanup scripts read to scrub your PII off of records.
 - If you are hesitant on this, you can reach out and I can help you with a PII scrub on a homelab or server.
 
 ## What you get
