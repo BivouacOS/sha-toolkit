@@ -27,7 +27,6 @@ Let Claude know if you want to stop any time; type `resume` later to pick up whe
 - Don't type your PII into the chat terminals, those are not private to you.
 - Claude is instructed never to open your original records (the /raw folder); local scripts remove your personal information first. The cleaned records (diagnoses, notes, test results) are then read by Claude, which means that information is sent to Anthropic servers.
 -  You type your name, SSN, DoD ID and birth date into a LOCAL file on your own computer that only the cleanup scripts read to scrub your PII off of records.
-- If you are hesitant on this, you can reach out and I can help you with a PII scrub on a homelab or server.
 
 ## What you get
 
@@ -38,6 +37,12 @@ Let Claude know if you want to stop any time; type `resume` later to pick up whe
 3. **SHA Answers** — your answers, with the supporting record, when there is one.
 
 ## Disclaimer
-This is a preparation tool, not legal or medical advice, and it is obviously subject to mistakes by AI. This is a tool you can use to organize your claims, communicate with your primary care and VSO and better understand the 38 CFR part 4 regulation. 
+Not Legal or Medical Advice: This is a free, self-help organizational tool, not professional advice. Always verify your claims with an accredited VSO or medical provider before submission.
+
+AI Makes Mistakes: This toolkit uses Claude to estimate ratings based on 38 CFR Part 4. AI can hallucinate, misread records, or calculate ratings incorrectly. You are solely responsible for verifying all outputs.
+
+Your Privacy, Your Responsibility: All PII scrubbing runs locally on your machine. You are responsible for ensuring your data is fully redacted before it is sent to Anthropic's servers.
+
+Provided "As-Is": THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
 
 It will always be free, and I will do my best to keep it updated at https://github.com/BivouacOS/sha-toolkit
