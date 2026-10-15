@@ -16,7 +16,7 @@ If you are not as technical I recommend:
 
 1. Install the Claude desktop app: https://claude.ai/download — sign in.
 2. Download this kit: green **Code** button → **Download ZIP**. Unzip it somewhere easy to find, like your Desktop.
-3. Open Claude, click **Code**, and choose the START HERE.txt.
+3. Open Claude, click **Code**, and choose the folder that contains START HERE.txt.
 4. Type: `start`
 
 This folder will tell Claude how to progress from there. By default, it will ask before installing anything.
@@ -26,7 +26,7 @@ Let Claude know if you want to stop any time; type `resume` later to pick up whe
 
 - Don't type your PII into the chat terminals, those are not private to you.
 - Claude is instructed never to open your original records (the /raw folder); local scripts remove your personal information first. The cleaned records (diagnoses, notes, test results) are then read by Claude, which means that information is sent to Anthropic servers.
--  You type your SSN, DoD ID and birth date into a LOCAL file on your own computer that only the cleanup scripts read to scrub your PII off of records.
+-  You type your name, SSN, DoD ID and birth date into a LOCAL file on your own computer that only the cleanup scripts read to scrub your PII off of records.
 - If you are hesitant on this, you can reach out and I can help you with a PII scrub on a homelab or server.
 
 ## What you get
