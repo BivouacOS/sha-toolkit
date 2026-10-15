@@ -4,6 +4,6 @@
 # remove these numbers from your records. Claude never opens this file.
 # Leave a line blank if you don't want to provide it.
 
-SSN:
-DoD ID:
+SSN (XXX-XX-XXXX):
+DoD ID (XXXXXXXXXX):
 Date of birth (YYYY-MM-DD):

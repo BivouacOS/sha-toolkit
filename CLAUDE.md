@@ -52,6 +52,13 @@ Tell them:
 
 Offer to open the folder for them: Windows `explorer "Medical Records\raw"`; Mac `open "Medical Records/raw"`.
 
+**If they don't have records yet:**
+1. Run `node build-tracker.mjs` with the data files still empty, so they have the blank `SHA Tracker.xlsx` to see the format. Offer to open it.
+2. Ask: *"Want to go head to toe and tell me what hurts or bothers you? I'll suggest what to bring up with your primary care provider, so it gets into your records before you separate."*
+3. If yes, walk head to toe one area at a time: head (headaches, head injuries), ears, eyes, neck, shoulders, arms/elbows/wrists/hands, chest/breathing, heart, stomach/digestion, back, hips, knees, ankles/feet, skin, sleep, mood. For each problem ask briefly when it started, what happened in service, and how it affects work and daily life now.
+4. Add each one to `data/potential-conditions.mjs` (everything is `Per veteran:` — there's no record yet). In `notes`, write what to ask primary care for: an exam of that area, imaging, a referral, a test (e.g. sleep study, audiogram). Rebuild and tell them the top items to raise at their next appointment.
+5. Then continue to Step 6. Skip Steps 4–5; when records arrive, they drop them in `raw/` and type `update`.
+
 ### Step 4 — Remove personal information
 - Run `node deidentify.mjs`, then `node verify-clean.mjs`.
 - If verify exits non-zero: it prints which **files** and which **kinds** of information remain (never the text). Ask them how else their name might be written (or whether a number might be formatted differently), add the pattern to `local.config.mjs`, run `node deidentify.mjs --all`, and verify again. Repeat until it exits 0. Do not read any clean file in the meantime.
@@ -71,6 +78,8 @@ Read every file in `Medical Records/clean/`. For each, note:
 Keep a working list mapping each SHA question id (from `data/sha-questions.mjs`) to the records that bear on it.
 
 ### Step 6 — SHA interview
+Before the first question, tell them: *"The first 12 questions are the SHA form paperwork, which can help me suggest typical issues in your MOS; the medical ones start after."* Then keep that promise: once you know their MOS and job, use them during the medical sections (e.g. for infantry, ask about knees, back, and hearing with that in mind) and in the `reason` field.
+
 Go through `shaSections` in order. Skip section `II.9` if they tell you it doesn't apply. For each section:
 1. Say the section name and one line about why it matters for the claim.
 2. Ask each question **one at a time**, using the form's wording. Offer the form's options (usually Yes / No) **plus "Explain"** — they can always answer in their own words instead.
