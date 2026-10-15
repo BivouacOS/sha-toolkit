@@ -1,0 +1,26 @@
+SHA TRACKER — HOW TO START
+
+This kit helps you get ready for your Separation Health Assessment (SHA) and
+VA disability claim. Claude reads your medical records (after removing your
+personal information), asks you the SHA questions one at a time, and builds
+an Excel tracker of your likely conditions and estimated VA rating.
+
+What you need: a computer, your MHS GENESIS Patient Portal login, and a paid
+Claude account.
+
+1. Install the Claude desktop app: https://claude.ai/download — sign in.
+2. Unzip SHA-Toolkit.zip somewhere easy to find, like your Desktop.
+   (Right-click the zip → Extract All.)
+3. Open Claude, click "Code", and choose the SHA-Toolkit folder you just unzipped.
+4. Type:  start
+
+Claude takes it from there. It will ask before installing anything — click
+Approve when it does. You can stop any time; type "resume" later to pick up
+where you left off.
+
+Your privacy: Claude never opens your original records. Your SSN, DoD ID and
+birth date go into a file on your own computer that only the cleanup scripts
+read — never into the chat.
+
+This is a preparation tool, not legal or medical advice. Take the finished
+tracker to a free accredited VSO (DAV, VFW, American Legion, AMVETS, PVA).

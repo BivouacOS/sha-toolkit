@@ -1,0 +1,16 @@
+{
+  "name": "sha-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deidentify": "node deidentify.mjs",
+    "deidentify:all": "node deidentify.mjs --all",
+    "verify:clean": "node verify-clean.mjs",
+    "build": "node build-tracker.mjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "pdf-parse": "^1.1.1"
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+local.config.mjs
+private-ids.txt
+Medical Records/
+*.xlsx
